@@ -15,6 +15,7 @@ word2vec模型搭建参考 [tensorflow官方给出的源码](https://github.com/
 
 数据集来源 [wb14123/couplet-dataset](https://github.com/wb14123/couplet-dataset)
 
+LTP模型下载地址 [哈工大语言云百度网盘](https://pan.baidu.com/share/link?shareid=1988562907&uk=2738088569#list/path=%2F)
 
 ## 开发环境
  - Python 3.5
