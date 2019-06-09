@@ -20,35 +20,41 @@ word2vec模型搭建参考 [tensorflow官方给出的源码](https://github.com/
  - 哈工大LTP
 
 ## 项目结构
-`./dialog` 中保存训练的数据 `in.txt` 和 `out.txt`
+`./dialog` 中保存训练的数据 `in.txt` 和 `out.txt` 
+
 `./dictionary` 中保存本地字典 `dic.txt`
+
 `./model` 中保存训练的模型
+
 `stop_words.txt` 中文文本停用词
+
 `train_couplet.py` 训练脚本
+
 `test_couplet.py` 测试脚本
+
 
 ## 使用
 <li>训练
-{% codeblock %}
+`
 python train_couplet.py
-{% endcodeblock %}
+`
 
 <li>使用
-{% codeblock %}
+`
 python test_couplet.py 白日依山尽
-{% endcodeblock %}
+`
 
 ## 测试结果
 输入
-{% codeblock %}
+`
 python test_couplet.py 两袖清风存正气
-{% endcodeblock %}
+`
 输出
-{% codeblock %}
+`
 成功读取数据
 成功创建词典集
 上联：两袖清风存正气
 下联：一网情深萏褒封
-{% endcodeblock %}
+`
 
 每次测试结果都不一样，大家也可以试一试
