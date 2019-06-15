@@ -34,48 +34,100 @@ def read_data():
     # 读取文本，预处理，分词，得到词典
     raw_word_list = []
     
-    in_dialogs=[]
-    out_dialogs=[]
-    for line in open("dialog/in.txt", encoding="utf8",errors='ignore'):
-        if line.strip():
-            in_dialogs.append(line.replace(" ","").replace("\n",""))
-    print("共载入"+str(len(in_dialogs))+"条上联")
-    for line in open("dialog/out.txt", encoding="utf8",errors='ignore'):
-        if line.strip():
-            out_dialogs.append(line.replace(" ","").replace("\n",""))
-    print("共载入"+str(len(out_dialogs))+"条下联")
+    data_set = 3 # 1.对联数据 2.三国演义 3.唐诗宋词
     
-    max_num = 200000 #自定义数据集大小
+    if data_set == 1:
+        in_dialogs=[]
+        out_dialogs=[]
+        for line in open("dialog/in.txt", encoding="utf8",errors='ignore'):
+            if line.strip():
+                in_dialogs.append(line.replace(" ","").replace("\n",""))
+        print("共载入"+str(len(in_dialogs))+"条上联")
+        for line in open("dialog/out.txt", encoding="utf8",errors='ignore'):
+            if line.strip():
+                out_dialogs.append(line.replace(" ","").replace("\n",""))
+        print("共载入"+str(len(out_dialogs))+"条下联")
+        
+        max_num = 200000 #自定义数据集大小
+        
+        print("选取其中"+str(max_num)+"条")
+        in_dialogs = in_dialogs[:max_num]
+        out_dialogs = out_dialogs[:max_num]
+        segmentor = Segmentor()
+        segmentor.load(cws_model_path)
     
-    print("选取其中"+str(max_num)+"条")
-    in_dialogs = in_dialogs[:max_num]
-    out_dialogs = out_dialogs[:max_num]
-    segmentor = Segmentor()
-    segmentor.load(cws_model_path)
+        for i in range(min(len(in_dialogs),len(out_dialogs))):
+            if len(in_dialogs[i])>0: # 如果句子非空
+                raw_words = list(segmentor.segment(in_dialogs[i]))
+                raw_word_list.extend(raw_words)
+            if len(out_dialogs[i])>0: # 如果句子非空
+                raw_words = list(segmentor.segment(out_dialogs[i]))
+                raw_word_list.extend(raw_words)
+    elif data_set == 2:
+        sgyy_dialogs=[]
+        for line in open("dialog/3gyy.txt", encoding="utf8",errors='ignore'):
+            if line.strip():
+                sgyy_dialogs.append(line.replace(" ","").replace("\n",""))
+        print("共载入"+str(len(sgyy_dialogs))+"条数据")
+        
+        max_num = 200000 #自定义数据集大小
+        
+        max_num = min(len(sgyy_dialogs),max_num)
+        
+        print("选取其中"+str(max_num)+"条")
+        sgyy_dialogs = sgyy_dialogs[:max_num]
 
-    for i in range(min(len(in_dialogs),len(out_dialogs))):
-        if len(in_dialogs[i])>0: # 如果句子非空
-            raw_words = list(segmentor.segment(in_dialogs[i]))
-            raw_word_list.extend(raw_words)
-        if len(out_dialogs[i])>0: # 如果句子非空
-            raw_words = list(segmentor.segment(out_dialogs[i]))
-            raw_word_list.extend(raw_words)
+        segmentor = Segmentor()
+        segmentor.load(cws_model_path)
+    
+        for i in range(len(sgyy_dialogs)):
+            if len(sgyy_dialogs[i])>0: # 如果句子非空
+                raw_words = list(segmentor.segment(sgyy_dialogs[i]))
+                raw_word_list.extend(raw_words)
+    elif data_set == 3:
+        tssc_dialogs=[]
+        for line in open("dialog/json/唐诗宋词.txt", encoding="utf8",errors='ignore'):
+            if line.strip():
+                tssc_dialogs.append(line.replace(" ","").replace("\n","").replace("，","").replace("。",""))
+        print("共载入"+str(len(tssc_dialogs))+"首唐诗宋词")
+        
+        max_num = 300000 #自定义数据集大小
+        
+        max_num = min(len(tssc_dialogs),max_num)
+        
+        print("选取其中"+str(max_num)+"条")
+        tssc_dialogs = tssc_dialogs[:max_num]
+
+        segmentor = Segmentor()
+        segmentor.load(cws_model_path)
+    
+        for i in range(len(tssc_dialogs)):
+            if len(tssc_dialogs[i])>0: # 如果句子非空
+                raw_words = list(segmentor.segment(tssc_dialogs[i]))
+                raw_word_list.extend(raw_words)
+    
     segmentor.release()
     return raw_word_list
 
+vocabulary_size = 100000
+
 def write_words_2_file(words):
     dic = open("./dictionary/dic.txt", "w", encoding='utf-8')
+    dic.seek(0)
+    dic.truncate()
+    print("重置本地词典文件")
+    words = list(words.items())[:vocabulary_size]
     for w in words:
-        dic.write(w+"\n")
+        dic.write(w[0]+"\n")
     dic.close()
 
 #step 1:读取文件中的内容组成一个列表,并将词典保存至本地
 words = read_data()
-write_words_2_file(words)
+
 print('Data size', len(words))
 
 # Step 2: Build the dictionary and replace rare words with UNK token.
-vocabulary_size = 50000
+
 
 def build_dataset(words):
     count = [['UNK', -1]]
@@ -84,6 +136,7 @@ def build_dataset(words):
     dictionary = dict()
     for word, _ in count:
         dictionary[word] = len(dictionary)
+            
     data = list()
     unk_count = 0
     for word in words:
@@ -98,6 +151,9 @@ def build_dataset(words):
     return data, count, dictionary, reverse_dictionary
 
 data, count, dictionary, reverse_dictionary = build_dataset(words)
+
+write_words_2_file(dictionary)
+
 #删除words节省内存
 del words  
 

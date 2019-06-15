@@ -13,7 +13,7 @@ import sys
 LTP_DATA_DIR = 'H:\\Python\\NLP_Learning_Files\\LTP\\ltp_data_v3.4.0'  # ltp模型目录的路径
 cws_model_path = os.path.join(LTP_DATA_DIR, 'cws.model')  # 分词模型路径，模型名称为`cws.model`
 
-vocabulary_size = 50000
+vocabulary_size = 100000
 
 data_index = 0
 
@@ -113,6 +113,7 @@ def getNearestWord(words,uplink):
             top_k = 50  # number of nearest neighbors
             nearest = (-sim[i, :]).argsort()[:top_k]
             for k in xrange(top_k):
+                # print(str(len(reverse_dictionary))+' '+str(nearest[k]))
                 close_word = reverse_dictionary[nearest[k]]
                 #print(close_word+valid_word)
                 if close_word != valid_word and len(close_word)==len(valid_word):
@@ -126,7 +127,7 @@ def getNearestWord(words,uplink):
 def main(uplink):
 
     if(len(uplink)<=1):
-        uplink = "白日依山尽"  # 如果没有参数，则设置默认值
+        uplink = "昨夜雨疏风骤"  # 如果没有参数，则设置默认值
     else:
         uplink = uplink[1]
     words = read_data()

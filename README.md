@@ -66,3 +66,10 @@ python test_couplet.py 两袖清风存正气
 ```
 
 每次测试结果都不一样，大家也可以试一试
+
+## 更新日志
+
+### 2019-6-16
+- 新增三国演义和唐诗宋词数据集（唐诗宋词数据集来自[chinese-poetry/chinese-poetry](https://github.com/chinese-poetry/chinese-poetry)，繁体汉字转简体调用[skydark/nstools](https://github.com/skydark/nstools/tree/master/zhtools）
+- 新增 `transfer2hans.py` ，用来将唐诗宋词数据集中的古诗词整理成便于训练的 `唐诗宋词.txt`
+- 优化数据存储结构
