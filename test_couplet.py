@@ -127,7 +127,7 @@ def getNearestWord(words,uplink):
 def main(uplink):
 
     if(len(uplink)<=1):
-        uplink = "昨夜雨疏风骤"  # 如果没有参数，则设置默认值
+        uplink = "昨夜做了一个梦"  # 如果没有参数，则设置默认值
     else:
         uplink = uplink[1]
     words = read_data()

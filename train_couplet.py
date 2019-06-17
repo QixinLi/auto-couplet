@@ -246,7 +246,7 @@ with graph.as_default():
     init = tf.global_variables_initializer()
 
 # Step 5: Begin training.
-num_steps = 3000000  #训练轮数
+num_steps = 30000000  #训练轮数
 
 
 
