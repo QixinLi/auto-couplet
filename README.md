@@ -17,6 +17,8 @@ word2vec模型搭建参考 [tensorflow官方给出的源码](https://github.com/
 
 LTP模型下载地址 [哈工大语言云百度网盘](https://pan.baidu.com/share/link?shareid=1988562907&uk=2738088569#list/path=%2F)
 
+中文word2vec预训练模型参考 [268G+训练好的word2vec模型（中文词向量）](https://www.jianshu.com/p/ae5b45e96dbf)
+
 ## 开发环境
  - Python 3.5
  - Tensorflow
@@ -35,6 +37,9 @@ LTP模型下载地址 [哈工大语言云百度网盘](https://pan.baidu.com/sha
 
 `test_couplet.py` 测试脚本
 
+`gensim_word2vec.py`  加载训练集，并在本地打开socket端口监听
+
+`gensim_test_couplet.py`  通过socket调用训练集并返回数据
 
 ## 使用
 <li>训练
@@ -68,6 +73,13 @@ python test_couplet.py 两袖清风存正气
 每次测试结果都不一样，大家也可以试一试
 
 ## 更新日志
+
+### 2019-6-26
+- 利用gensim调用了[简书用户___dada____](https://www.jianshu.com/p/ae5b45e96dbf)训练好的word2vec模型
+
+- 新增 `gensim_word2vec.py` ，加载训练集，并在本地打开socket端口监听
+
+- 新增 `gensim_test_couplet.py` ，通过socket调用训练集并返回数据
 
 ### 2019-6-16
 - 新增三国演义和唐诗宋词数据集
