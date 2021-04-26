@@ -42,26 +42,60 @@ LTP模型下载地址 [哈工大语言云百度网盘](https://pan.baidu.com/sha
 `gensim_test_couplet.py`  通过socket调用训练集并返回数据
 
 ## 使用
+
+### BERT
+
 <li>训练
 
-`
+```bash
+cd bert_model
+python train.py
+```
+
+<li>开启socket服务
+
+```bash
+python socket_server.py
+```
+
+<li>测试
+
+```bash
+python predict.py
+昨夜雨疏风骤
+```
+
+<li>输出
+
+```
+==============================
+输入:昨夜雨疏风骤
+上联:昨夜雨疏风骤
+下联:今朝月暗星明
+==============================
+```
+
+### word2vec
+
+<li>训练
+
+```bash
 python train_couplet.py
-`
+```
 
 <li>使用
 
-`
+```bash
 python test_couplet.py 白日依山尽
-`
+```
 
-## 测试结果
-输入
+<li>输入
 
-`
+```bash
 python test_couplet.py 两袖清风存正气
-`
+```
 
-输出
+<li>输出
 
 ```
 成功读取数据
@@ -73,6 +107,9 @@ python test_couplet.py 两袖清风存正气
 每次测试结果都不一样，大家也可以试一试
 
 ## 更新日志
+
+### 2021-4-26
+- 新增 `bert_model/`，利用[Chinese-BERT-wwm](https://github.com/ymcui/Chinese-BERT-wwm)预训练模型，训练字映射模型
 
 ### 2019-6-26
 - 利用gensim调用了[简书用户___dada____](https://www.jianshu.com/p/ae5b45e96dbf)训练好的word2vec模型

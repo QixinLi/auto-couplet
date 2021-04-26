@@ -1,0 +1,13 @@
+*.pkl
+*.npy
+*.log
+*.bin
+*.zip
+*.rar
+*.gz
+*.tsv
+*.xlsx
+*.json
+*.txt
+*.swp
+bert_model/couplet/vocabs
