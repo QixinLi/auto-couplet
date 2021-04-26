@@ -1,5 +1,5 @@
-# word2vec_auto-couplet
-采用word2vec模型，让计算机也会对对联
+# auto-couplet
+深度学习自动对对联程序，用word2vec和bert预训练模型两种方式
 
 ## 前言
 
@@ -22,6 +22,7 @@ LTP模型下载地址 [哈工大语言云百度网盘](https://pan.baidu.com/sha
 ## 开发环境
  - Python 3.5
  - Tensorflow
+ - Pytorch
  - 哈工大LTP
 
 ## 项目结构
